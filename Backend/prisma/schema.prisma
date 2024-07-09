@@ -13,8 +13,10 @@ model User {
   prenom      String
   email       String   @unique
   password    String
-  adresse     String
-  num         String
+  adresse     String?
+  num         String?
+  newsletter  Boolean
+  salaire     Int?
   transactions Transaction[]
 }
 
@@ -22,7 +24,7 @@ model Transaction {
   id                Int      @id @default(autoincrement())
   nomTransaction    String
   montantTransaction Float
-  dateTransaction   DateTime
+  dateTransaction   DateTime @default(now())
   categorie         Categorie @relation(fields: [categorieId], references: [id])
   categorieId       Int
   user              User     @relation(fields: [userId], references: [id])
@@ -32,7 +34,7 @@ model Transaction {
 model Categorie {
   id             Int      @id @default(autoincrement())
   nomCategorie   String
-  budgetCategorie Float
+  budgetCategorie Float?
 
   transactions   Transaction[]
 }
