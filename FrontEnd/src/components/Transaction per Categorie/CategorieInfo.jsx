@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import NavbarLogged from "../navbars/Navbar-logged";
-import Modal from "./Modal";
+import Modal from "./DeleteModal";
+import EditModal from "./EditModal";
 
 const CategorieInfo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editModal, setEditModal] = useState(false);
+
+  const handleEditModal = () => {
+    setEditModal(true);
+  };
 
   const handleEditClick = () => {
     setIsModalOpen(true);
@@ -12,7 +18,7 @@ const CategorieInfo = () => {
   return (
     <>
       <NavbarLogged />
-      <div className="container mx-auto max-w-7xl p-4 mt-10">
+      <div className="container mx-auto max-w-screen-xl p-4 mt-10">
         <h2 className="text-xl font-semibold text-blue-700 sm:text-4xl mb-10">
           Categorie: Utilities
         </h2>
@@ -46,12 +52,15 @@ const CategorieInfo = () => {
                 <td className="px-6 py-4">Laptop</td>
                 <td className="px-6 py-4">$2999</td>
                 <td className="px-6 py-4">
-                  <button className="font-medium text-white dark:text-blue-500 hover:underline mr-2 border bg-green-500 pl-4 pr-4 pt-1 pb-1 rounded-lg">
+                  <button
+                    onClick={handleEditModal}
+                    className="font-medium text-white dark:text-blue-500 hover:underline mr-2 border bg-green-500 pl-3 pr-3 p-1.5 rounded-lg sm:pl-4 sm:pr-4"
+                  >
                     Edit
                   </button>
                   <button
                     onClick={handleEditClick}
-                    className="font-medium text-white dark:text-red-500 hover:underline border bg-red-500 p-1 pl-2 pr-2 rounded-lg"
+                    className="font-medium text-white dark:text-red-500 hover:underline border bg-red-500 p-1 pl-2 pr-2 rounded-lg sm:p-1.5 sm:pl-2.5 sm:pr-2.5"
                   >
                     Delete
                   </button>
@@ -63,6 +72,7 @@ const CategorieInfo = () => {
       </div>
 
       {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
+      {editModal && <EditModal onClose={() => setEditModal(false)} />}
     </>
   );
 };

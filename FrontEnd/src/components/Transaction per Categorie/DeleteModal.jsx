@@ -35,17 +35,13 @@ export default function Modal({ onClose }) {
                   >
                     supprimer cet élément ?
                   </DialogTitle>
-                  {/* <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      Modal content goes here...
-                    </p>
-                  </div> */}
                 </div>
               </div>
             </div>
             <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 justify-center">
             <button
                 type="button"
+                onClick={onClose}
                 className="inline-flex justify-center w-full sm:w-auto sm:ml-3 px-3 py-2 text-sm font-semibold text-white bg-green-500 rounded-md shadow-sm hover:bg-blue-500"
               >
                 Annuler
