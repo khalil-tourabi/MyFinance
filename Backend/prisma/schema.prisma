@@ -17,6 +17,7 @@ model User {
   num         String?
   newsletter  Boolean
   salaire     Int?
+  isActive    Boolean?
   transactions Transaction[]
 }
 
