@@ -1,10 +1,9 @@
-import CategorieInfo from './components/Transaction per Categorie/CategorieInfo';
-import TransactionPage from './components/Transaction-Page/Transaction'
+import Profile from './components/Profile/Profile';
 
 function App() {
   return (
     <>
-      <CategorieInfo />
+      <Profile />
     </>
   );
 }
