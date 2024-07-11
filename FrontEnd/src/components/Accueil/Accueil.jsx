@@ -6,6 +6,7 @@ import UseCases from './UseCases';
 import RicherLife from './RicherLife';
 import WalletHelps from './WalletHelps';
 import Footer from './Footer';
+import Testemonials from './Testemonial';
 
 const Accueil = () => {
     return ( 
@@ -16,6 +17,7 @@ const Accueil = () => {
             <UseCases />
             <RicherLife />
             <WalletHelps />
+            <Testemonials />
             <Footer />
         </>
      );
