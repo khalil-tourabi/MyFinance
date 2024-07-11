@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import NavbarLogged from "../navbars/Navbar-logged";
+import ProfileModal from "./ProfileModal";
 
 const Profile = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    setModalOpen(true);
+  };
+
   return (
     <>
       <NavbarLogged />
@@ -65,13 +72,18 @@ const Profile = () => {
               </dd>
             </div>
             <div className="flex justify-center items-end mt-5">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-10 py-2 rounded-xl flex items-center justify-center">
+              <button
+                onClick={handleModalOpen}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-10 py-2 rounded-xl flex items-center justify-center"
+              >
                 Modify
               </button>
             </div>
           </dl>
         </div>
       </div>
+
+      {modalOpen && <ProfileModal onClose={() => setModalOpen(false)} />}
     </>
   );
 };
