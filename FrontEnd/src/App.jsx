@@ -6,7 +6,7 @@ import CategorieInfo from './components/Transaction per Categorie/CategorieInfo'
 function App() {
   return (
     <>
-      <Profile />
+      <Budget />
     </>
   );
 }
