@@ -1,16 +1,12 @@
 import React, { Component } from "react";
-import img from '../../assets/guy-budget.png'
+import img from "../../assets/guy-budget.png";
+import NavbarUnlogged from "../navbars/Navbar-unlogged";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
     <>
-      {/*
-  Heads up! 👋
-
-  Plugins:
-    - @tailwindcss/forms
-*/}
-
+      <NavbarUnlogged />
       <section className="relative flex flex-wrap lg:h-screen lg:items-center">
         <div className="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24">
           <div className="mx-auto max-w-lg text-center">
@@ -96,9 +92,9 @@ const Login = () => {
             <div className="flex items-center justify-between">
               <p className="text-sm text-gray-500">
                 No account?
-                <a className="underline" href="#">
+                <Link to={"/signup"} className="underline">
                   Sign up
-                </a>
+                </Link>
               </p>
 
               <button

@@ -1,16 +1,12 @@
 import React, { Component } from "react";
 import img from "../../assets/guy-budget.png";
+import NavbarUnlogged from "../navbars/Navbar-unlogged";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   return (
     <>
-      {/*
-  Heads up! 👋
-
-  Plugins:
-    - @tailwindcss/forms
-*/}
-
+      <NavbarUnlogged />
       <section className="bg-white">
         <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
           <section className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
@@ -90,7 +86,7 @@ const Register = () => {
                   <input
                     type="text"
                     id="FirstName"
-                    name="first_name"
+                    name="firstname"
                     className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                   />
                 </div>
@@ -106,7 +102,7 @@ const Register = () => {
                   <input
                     type="text"
                     id="LastName"
-                    name="last_name"
+                    name="lastname"
                     className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                   />
                 </div>
@@ -199,9 +195,9 @@ const Register = () => {
 
                   <p className="mt-4 text-sm text-gray-500 sm:mt-0">
                     Already have an account?
-                    <a href="#" className="text-gray-700 underline">
+                    <Link to={'/login'} className="text-gray-700 underline">
                       Log in
-                    </a>
+                    </Link>
                     .
                   </p>
                 </div>

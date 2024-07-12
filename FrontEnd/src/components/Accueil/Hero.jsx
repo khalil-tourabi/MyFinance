@@ -1,5 +1,6 @@
 import React from "react";
 import hero from '../../assets/hero.jpg';
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -30,12 +31,12 @@ const Hero = () => {
             </p>
 
             <div className="mt-8 flex justify-center sm:justify-center">
-              <a
-                href="#"
+              <Link
+                to={'/signup'}
                 className="block rounded bg-rose-600 px-12 py-3 text-sm font-medium text-white shadow-lg hover:bg-rose-700 focus:outline-none focus:ring active:bg-rose-500 sm:w-auto"
               >
                 Get Started
-              </a>
+              </Link>
             </div>
           </div>
         </div>
