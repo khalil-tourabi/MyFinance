@@ -26,7 +26,7 @@ const Budget = () => {
     <>
       <NavbarLogged />
       <div className="p-14">
-        <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl text-center mb-8">
+        <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl text-center mb-8">
           Budget table
         </h2>
 

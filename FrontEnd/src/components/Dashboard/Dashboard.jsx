@@ -5,7 +5,7 @@ const Dashboard = () => {
     return ( 
         <>
             <NavbarLogged />
-            
+            <h1>Dashboard</h1>
         </>
      );
 }
