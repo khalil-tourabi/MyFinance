@@ -1,14 +1,19 @@
 import express from 'express'
-const app = express();
+import cors from 'cors'
 import dotenv from 'dotenv';
-dotenv.config();
+import authRoute from './src/routes/authRoutes.js';
+import refreshTokenRoute from './src/routes/refreshTokenRoute.js';
 
+dotenv.config();
+const app = express();
+
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-import authRoute from './src/routes/authRoutes.js';
 
 app.use(authRoute);
+app.use(refreshTokenRoute);
 
 app.all('*', (req, res, next) => {
     res.status(400).json({ success: false, msg: 'wrong url path' })
