@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import authRoute from './src/routes/authRoutes.js';
 import refreshTokenRoute from './src/routes/refreshTokenRoute.js';
 import userRouter from './src/routes/userRoutes.js';
+import categorieRoute from './src/routes/categorieRoute.js';
 
 dotenv.config();
 const app = express();
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(authRoute);
 app.use(refreshTokenRoute);
 app.use(userRouter);
+app.use(categorieRoute);
 
 app.all('*', (req, res, next) => {
     res.status(400).json({ success: false, msg: 'wrong url path' })
