@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NavbarLogged from "../navbars/Navbar-logged";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentUserProfile } from "../../state/users/usersSlice";
 
 const TransactionPage = () => {
+
+  const {accessToken, currentUser} = useSelector((store) => store.users)
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if(accessToken)
+      dispatch(getCurrentUserProfile(accessToken))
+  }, [accessToken])
+
+  console.log(currentUser);
+
   return (
     <>
       <NavbarLogged />

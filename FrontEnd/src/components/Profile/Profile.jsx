@@ -1,13 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import NavbarLogged from "../navbars/Navbar-logged";
 import ProfileModal from "./ProfileModal";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentUserProfile } from "../../state/users/usersSlice";
 
 const Profile = () => {
+  const {currentUser, accessToken} = useSelector((store) => store.users)
+  const dispatch = useDispatch();
+
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleModalOpen = () => {
     setModalOpen(true);
   };
+
+  useLayoutEffect(() => {
+    if(accessToken)
+      dispatch(getCurrentUserProfile(accessToken))
+  }, [accessToken])
 
   return (
     <>
@@ -28,7 +38,7 @@ const Profile = () => {
                 Nom
               </dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                Margot
+                {currentUser?.currUser.nom}
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -36,7 +46,7 @@ const Profile = () => {
                 Prenom
               </dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                Foster
+                {currentUser?.currUser.prenom}
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -44,7 +54,7 @@ const Profile = () => {
                 Email address
               </dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                margotfoster@example.com
+                {currentUser?.currUser.email}
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -52,7 +62,7 @@ const Profile = () => {
                 Numero du Telephone
               </dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                0600000000
+                {currentUser?.currUser.num}
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -60,7 +70,7 @@ const Profile = () => {
                 Adresse
               </dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                08 Rue epsum Quartier epsum lorem epsum, Casablance
+                {currentUser?.currUser.adresse}
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -68,7 +78,7 @@ const Profile = () => {
                 Salaire
               </dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                7000 Mad
+                {currentUser?.currUser.salaire}
               </dd>
             </div>
             <div className="flex justify-center items-end mt-5">
@@ -83,7 +93,7 @@ const Profile = () => {
         </div>
       </div>
 
-      {modalOpen && <ProfileModal onClose={() => setModalOpen(false)} />}
+      {modalOpen && <ProfileModal currentUser={currentUser} onClose={() => setModalOpen(false)} />}
     </>
   );
 };
