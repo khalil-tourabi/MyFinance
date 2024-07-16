@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getUsers, registerUser, loginUser, refreshToken, logoutUser } from "../../services/usersService";
-import { useNavigate } from "react-router-dom";
 
 const initialState = {
     users: [],
     status: 'idle',
+    error: null,
     accessToken: null,
     refreshToken: null
 }
@@ -52,6 +52,7 @@ export const refresh = createAsyncThunk('users/refresh', async (token) => {
 export const logout = createAsyncThunk('users/logout', async (token) => {
     try {
         await logoutUser(token);
+        return {}; 
     } catch (error) {
         console.log(error);
         throw error;
@@ -62,7 +63,8 @@ const usersSlice = createSlice({
     name: 'users',
     initialState,
     extraReducers: (builder) => {
-        builder.addCase(getUsersSlice.pending, (state) => {
+        builder.addCase
+        (getUsersSlice.pending, (state) => {
             state.status = 'loading';
         })
         .addCase(getUsersSlice.fulfilled, (state, action) => {
@@ -102,7 +104,13 @@ const usersSlice = createSlice({
         .addCase(logout.fulfilled, (state) => {
             state.accessToken = null;
             state.refreshToken = null;
+            console.log(state.accessToken);
+            console.log(state.refreshToken);
         })
+        .addCase(logout.rejected, (state, action) => {
+            state.error = action.error.message;
+            console.error('Logout failed: ', action.error.message);
+        });
     }
 })
 

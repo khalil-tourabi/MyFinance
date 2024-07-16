@@ -10,6 +10,9 @@ import {
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import logo from "../../assets/logo.png";
 import { FaRegUserCircle } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../state/users/usersSlice";
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -23,6 +26,22 @@ function classNames(...classes) {
 }
 
 export default function NavbarLogged() {
+  const {accessToken} = useSelector((store) => store.users)
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const logoutHandle = () => {
+    dispatch(logout(accessToken))
+      .then(() => {
+        navigate('/')
+      })
+      .catch((error) => {
+        console.error('failed to logout', error);
+        alert('failed to logout, Please try again!')
+      })
+  }
+  
   return (
     <Disclosure as="nav" className="bg-gray-100">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -76,28 +95,44 @@ export default function NavbarLogged() {
               </MenuButton>
               <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in">
                 <MenuItem>
-                  <a
-                    href="#"
+                  <Link
+                    to={'/transactions'}
+                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                  >
+                    Transaction
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link
+                    to={'/dashboard'}
+                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                  >
+                    Dashboard
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link
+                    to={'/profile'}
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                   >
                     Your Profile
-                  </a>
+                  </Link>
                 </MenuItem>
                 <MenuItem>
-                  <a
-                    href="#"
+                  <Link
+                    to={'/budget'}
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                   >
                     Budget
-                  </a>
+                  </Link>
                 </MenuItem>
                 <MenuItem>
-                  <a
-                    href="#"
+                  <button
+                    onClick={logoutHandle}
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                   >
                     Sign out
-                  </a>
+                  </button>
                 </MenuItem>
               </MenuItems>
             </Menu>{" "}
