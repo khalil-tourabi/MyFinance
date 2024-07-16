@@ -88,6 +88,8 @@ const usersSlice = createSlice({
             state.status = 'success',
             state.accessToken = action.payload.accessToken;
             state.refreshToken = action.payload.refreshToken;
+            console.log(state.accessToken);
+            console.log(state.refreshToken);
         })
         .addCase(login.rejected, (state, action) => {
             state.status = 'failed',

@@ -1,9 +1,39 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import img from "../../assets/guy-budget.png";
 import NavbarUnlogged from "../navbars/Navbar-unlogged";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../../state/users/usersSlice";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [data, setData] = useState({
+    email: '',
+    password: ''
+  })
+
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+    setData({...data, [name]:value})
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    dispatch(login(data))
+      .unwrap()
+      .then(() => {
+        navigate('/transactions');
+      })
+      .catch((error) => {
+        console.error('Failed to login:', error);
+        alert('Login failed. Please try again.');
+      });
+      
+  }
+
   return (
     <>
       <NavbarUnlogged />
@@ -20,7 +50,7 @@ const Login = () => {
             </p>
           </div>
 
-          <form action="#" className="mx-auto mb-0 mt-8 max-w-md space-y-4">
+          <form onSubmit={handleSubmit} className="mx-auto mb-0 mt-8 max-w-md space-y-4">
             <div>
               <label htmlFor="email" className="sr-only">
                 Email
@@ -29,6 +59,9 @@ const Login = () => {
               <div className="relative">
                 <input
                   type="email"
+                  name="email"
+                  value={data.email}
+                  onChange={handleChange}
                   className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                   placeholder="Enter email"
                 />
@@ -60,6 +93,9 @@ const Login = () => {
               <div className="relative">
                 <input
                   type="password"
+                  name="password"
+                  value={data.password}
+                  onChange={handleChange}
                   className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                   placeholder="Enter password"
                 />
