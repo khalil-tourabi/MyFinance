@@ -5,8 +5,18 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import { useDispatch } from "react-redux";
+import { deleteCategorieSlice } from "../../state/categories/categoriesSlice";
 
-export default function DeleteModal({ onClose }) {
+export default function DeleteModal({ categorieId, onClose }) {
+
+  const dispatch = useDispatch();
+
+  const handleDelete = () => {
+    dispatch(deleteCategorieSlice(categorieId));
+    onClose();
+  }
+
   return (
     <Dialog open={true} onClose={onClose} className="relative z-10">
       <DialogBackdrop
@@ -48,6 +58,7 @@ export default function DeleteModal({ onClose }) {
               </button>
               <button
                 type="button"
+                onClick={handleDelete}
                 className="inline-flex justify-center w-full sm:w-auto sm:ml-3 px-3 py-2 text-sm font-semibold text-white bg-red-600 rounded-md shadow-sm hover:bg-red-500"
               >
                 Delete

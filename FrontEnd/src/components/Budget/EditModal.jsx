@@ -6,7 +6,7 @@ import {
   } from "@headlessui/react";
   import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
   
-  export default function EditBudgetModal({ onClose }) {
+  export default function EditBudgetModal({ categorieId, onClose }) {
     return (
       <Dialog open={true} onClose={onClose} className="relative z-10">
         <DialogBackdrop
@@ -59,7 +59,7 @@ import {
                               Budget:
                             </label>
                             <input
-                              type="text"
+                              type="number"
                               id="base-input"
                               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             />

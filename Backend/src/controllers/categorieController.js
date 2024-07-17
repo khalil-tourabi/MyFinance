@@ -24,7 +24,7 @@ export const addCategorie = async (req, res) => {
         const newCategorie = await prisma.categorie.create({
             data: {
                 nomCategorie,
-                budgetCategorie
+                budgetCategorie: parseFloat(budgetCategorie)
             }
         })
 
@@ -47,7 +47,7 @@ export const modifyCategorie = async (req, res) => {
             where: { id: Number(id) },
             data: {
                 nomCategorie,
-                budgetCategorie
+                budgetCategorie: parseFloat(budgetCategorie)
             }
         })
 
