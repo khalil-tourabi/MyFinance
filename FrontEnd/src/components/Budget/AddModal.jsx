@@ -7,7 +7,7 @@ import {
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addCategorieSlice } from "../../state/categories/categoriesSlice";
+import { addCategorieSlice, getCategoriesSlice } from "../../state/categories/categoriesSlice";
 
 export default function AddBudgetModal({ onClose }) {
   const dispatch = useDispatch();
@@ -31,6 +31,7 @@ export default function AddBudgetModal({ onClose }) {
     try {
       await dispatch(addCategorieSlice(categorieData)).unwrap(); 
       setCategorieData({ nomCategorie: "", budgetCategorie: "" });
+      dispatch(getCategoriesSlice());
       onClose();
     } catch (error) {
       console.log("Error occurred while adding category:", error);

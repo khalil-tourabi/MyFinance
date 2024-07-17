@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addCategorie, deleteCategorie, getCategories } from "../../services/categoriesService";
+import { addCategorie, deleteCategorie, getCategories, modifyCategorie } from "../../services/categoriesService";
 
 const initialState = {
     categories: [],
@@ -37,6 +37,19 @@ export const deleteCategorieSlice = createAsyncThunk('categories/deleteCategorie
     }
 })
 
+export const modifyCategorieSlice = createAsyncThunk(
+    'categories/modifyCategorieSlice',
+    async ({ id, data }) => {
+        try {
+            const modifiedCategorie = await modifyCategorie(id, data);
+            return modifiedCategorie;
+        } catch (error) {
+            console.log('error occurred while modifying categories', error);
+            throw(error)
+        }
+    }
+);
+
 const categoriesSlice = createSlice({
     name: 'categories',
     initialState,
@@ -73,6 +86,20 @@ const categoriesSlice = createSlice({
                 state.categories = state.categories.filter(categorie => categorie.id !== action.payload);
             })
             .addCase(deleteCategorieSlice.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message;
+            })
+            .addCase(modifyCategorieSlice.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(modifyCategorieSlice.fulfilled, (state, action) => {
+                state.status = 'success';
+                const index = state.categories.findIndex(categorie => categorie.id === action.payload.id);
+                if (index !== -1) {
+                    state.categories[index] = action.payload;
+                }
+            })
+            .addCase(modifyCategorieSlice.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message;
             })

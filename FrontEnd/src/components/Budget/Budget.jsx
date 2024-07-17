@@ -17,6 +17,8 @@ const Budget = () => {
 
   const [categorieID, setCategorieID] = useState(null)
 
+  const categorieInitialData = categories.find(categorie => categorie.id === categorieID) || {};
+
   // modal stuff
   const [addBudgetModal, setAddBudgetModal] = useState(false);
   const [editBudgetModal, setEditBudgetModal] = useState(false);
@@ -98,7 +100,7 @@ const Budget = () => {
             <AddBudgetModal onClose={() => setAddBudgetModal(false)} />
           )}
           {editBudgetModal && (
-            <EditBudgetModal onClose={() => setEditBudgetModal(false)} categorieId={categorieID} />
+            <EditBudgetModal onClose={() => setEditBudgetModal(false)} categorieId={categorieID} categorieInitialData={categorieInitialData} />
           )}
           {deleteModal && <DeleteModal onClose={() => setDeleteModal(false)} categorieId={categorieID} />}
         </>
