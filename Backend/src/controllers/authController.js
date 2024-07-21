@@ -12,8 +12,6 @@ export const register = async (req, res) => {
     try {
         const { nom, prenom, email, password, newsletter } = req.body;
 
-        console.log(req.body);
-
         if (!nom || !prenom || !email || !password) {
             return res.status(StatusCodes.BAD_REQUEST)
                 .json({ error: 'You forgot something, please check again!' })
@@ -41,8 +39,6 @@ export const register = async (req, res) => {
                 newsletter
             }
         })
-
-        // const token = generateToken({ user: newUser }, process.env.APP_ACCESS_TOKEN_SECRET);
 
         const accessToken = generateToken({ user: newUser }, process.env.APP_ACCESS_TOKEN_SECRET, '15m');
         const refreshToken = generateToken({ user: newUser }, process.env.APP_REFRESH_TOKEN_SECRET, '7d');

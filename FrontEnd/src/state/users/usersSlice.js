@@ -97,26 +97,22 @@ const usersSlice = createSlice({
                     state.error = aciton.payload.error;
             })
             .addCase(register.fulfilled, (state, action) => {
-                state.status = 'success',
-                    state.accessToken = action.payload.accessToken;
+                state.status = 'success'
+                state.accessToken = action.payload.accessToken;
                 state.refreshToken = action.payload.refreshToken;
-                console.log(state.accessToken);
-                console.log(state.refreshToken);
             })
             .addCase(register.rejected, (state, action) => {
                 state.status = 'failed',
                     state.error = action.payload.error
             })
             .addCase(login.fulfilled, (state, action) => {
-                state.status = 'success',
-                    state.accessToken = action.payload.accessToken;
+                state.status = 'success'
+                state.accessToken = action.payload.accessToken;
                 state.refreshToken = action.payload.refreshToken;
-                console.log(state.accessToken);
-                console.log(state.refreshToken);
             })
             .addCase(login.rejected, (state, action) => {
-                state.status = 'failed',
-                    state.error = action.payload.error
+                state.status = 'failed'
+                state.error = action.payload.error
             })
             .addCase(refresh.fulfilled, (state, action) => {
                 state.accessToken = action.payload.accessToken;
@@ -125,8 +121,6 @@ const usersSlice = createSlice({
             .addCase(logout.fulfilled, (state) => {
                 state.accessToken = null;
                 state.refreshToken = null;
-                console.log(state.accessToken);
-                console.log(state.refreshToken);
             })
             .addCase(logout.rejected, (state, action) => {
                 state.error = action.error.message;
@@ -146,7 +140,6 @@ const usersSlice = createSlice({
             .addCase(getCurrentUserProfile.fulfilled, (state, action) => {
                 state.status = 'success'
                 state.currentUser = action.payload;
-                console.log(state.currentUser);
             })
             .addCase(getCurrentUserProfile.rejected, (state, action) => {
                 state.status = 'failed'
