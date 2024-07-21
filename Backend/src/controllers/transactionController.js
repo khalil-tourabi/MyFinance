@@ -42,3 +42,44 @@ export const addTransaction = async (req, res) => {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({Error: 'Error occured while creating new categorie'});
     }
 }
+
+export const deleteTransaction = async (req, res) => {
+    try {
+        const {id} = req.params;
+
+        if (!id)
+            res.status(StatusCodes.BAD_REQUEST).json({Error: "No id was provided!"})
+
+        await prisma.transaction.delete({
+            where: {id: Number(id)}
+        })
+
+        res.status(StatusCodes.OK).json({Message: 'Transaction deleted successfuly!'})
+    } catch (error) {
+        console.log('Error occured while deleting transaction', error);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({Error: 'Error occured while deleting transaction!'})
+    }
+}
+
+export const modifyTransaction = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { nomTransaction, montantTransaction, categorieId, userId } = req.body;
+        
+        const updateData = {};
+        if (nomTransaction) updateData.nomTransaction = nomTransaction;
+        if (montantTransaction) updateData.montantTransaction = parseFloat(montantTransaction);
+        if (categorieId) updateData.categorie = { connect: { id: parseInt(categorieId) } };
+        if (userId) updateData.user = { connect: { id: userId } };
+
+        const updatedTransaction = await prisma.transaction.update({
+            where: { id: Number(id) },
+            data: updateData
+        });
+
+        res.status(StatusCodes.OK).json(updatedTransaction);
+    } catch (error) {
+        console.log('error occurred while updating transaction', error);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({Error: 'Error occurred while updating transaction'});
+    }
+}

@@ -16,3 +16,13 @@ export const addTransaction = async (data) => {
     const newTransaction = await transactionAPI.post('/addtransaction', data);
     return newTransaction.data;
 }
+
+export const deleteTransaction = async(id) => {
+    const deletedTransaction = await transactionAPI.delete(`/deletetransaction/${id}`);
+    return deletedTransaction.data;
+}
+
+export const  modifyTransaction = async (id, data) => {
+    const updatedTransaction = await transactionAPI.put(`/updatetransaction/${id}`, data)
+    return updatedTransaction.data;
+}

@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Dialog,
   DialogBackdrop,
@@ -5,8 +6,30 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import { useDispatch, useSelector } from "react-redux";
+import { updateTransaction } from "../../state/transactions/transactionsSlice";
 
-export default function EditModal({ onClose }) {
+export default function EditModal({ onClose, transaction }) {
+  const dispatch = useDispatch();
+  const { categories } = useSelector((store) => store.categories);
+
+  const [data, setData] = useState({
+    nomTransaction: transaction.nomTransaction || "",
+    montantTransaction: transaction.montantTransaction || "",
+    categorieId: transaction.categorieId || "",
+    userId: transaction.userId || "",
+  });
+
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(updateTransaction({ id: transaction.id, data }));
+    onClose();
+};
+
   return (
     <Dialog open={true} onClose={onClose} className="relative z-10">
       <DialogBackdrop
@@ -37,58 +60,71 @@ export default function EditModal({ onClose }) {
                   </DialogTitle>
                   <div className="mt-2">
                     <div className="border rounded-2xl mr-4 ml-6 p-6 mb-7 w-full">
-                      <form>
+                      <form onSubmit={handleSubmit}>
                         <div className="mb-5">
                           <label
-                            htmlFor="base-input"
+                            htmlFor="nomTransaction"
                             className="block mb-2 text-sm font-medium text-gray-900"
                           >
                             Transaction
                           </label>
                           <input
                             type="text"
-                            id="base-input"
+                            id="nomTransaction"
+                            name="nomTransaction"
+                            value={data.nomTransaction}
+                            onChange={handleChange}
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                           />
                         </div>
                         <div className="mb-5">
                           <label
-                            htmlFor="base-input"
+                            htmlFor="montantTransaction"
                             className="block mb-2 text-sm font-medium text-gray-900"
                           >
                             Montant
                           </label>
                           <input
                             type="text"
-                            id="base-input"
+                            id="montantTransaction"
+                            name="montantTransaction"
+                            value={data.montantTransaction}
+                            onChange={handleChange}
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                           />
                         </div>
-                        {/* DropDown List */}
-                        <label
-                          htmlFor="categories"
-                          className="block mb-2 text-sm font-medium text-gray-900"
-                        >
-                          Select your category
-                        </label>
-                        <select
-                          id="categories"
-                          className="mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        >
-                          <option>Utilities</option>
-                          <option>Louasirs</option>
-                        </select>
+                        <div className="mb-5">
+                          <label
+                            htmlFor="categorieId"
+                            className="block mb-2 text-sm font-medium text-gray-900"
+                          >
+                            Sélectionnez votre catégorie
+                          </label>
+                          <select
+                            id="categorieId"
+                            name="categorieId"
+                            value={data.categorieId}
+                            onChange={handleChange}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                          >
+                            {categories.map((category) => (
+                              <option key={category.id} value={category.id}>
+                                {category.nomCategorie}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
                         <div className="flex justify-center">
                           <button
                             type="submit"
-                            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm px-6 py-2.5 mb-2 mr-2" // Adjusted padding and margin
+                            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm px-6 py-2.5 mb-2 mr-2"
                           >
-                            Ajouter
+                            Modifier
                           </button>
                           <button
                             type="button"
                             onClick={onClose}
-                            className="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-semibold rounded-lg text-sm px-6 py-2.5 mb-2 ml-2" // Adjusted padding and margin
+                            className="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-semibold rounded-lg text-sm px-6 py-2.5 mb-2 ml-2"
                           >
                             Annuler
                           </button>
@@ -99,20 +135,6 @@ export default function EditModal({ onClose }) {
                 </div>
               </div>
             </div>
-            {/* <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 justify-center">
-            <button
-                type="button"
-                className="inline-flex justify-center w-full sm:w-auto sm:ml-3 px-3 py-2 text-sm font-semibold text-white bg-green-500 rounded-md shadow-sm hover:bg-blue-500"
-              >
-                Annuler
-              </button>
-              <button
-                type="button"
-                className="inline-flex justify-center w-full sm:w-auto sm:ml-3 px-3 py-2 text-sm font-semibold text-white bg-red-600 rounded-md shadow-sm hover:bg-red-500"
-              >
-                Delete
-              </button>
-            </div> */}
           </DialogPanel>
         </div>
       </div>

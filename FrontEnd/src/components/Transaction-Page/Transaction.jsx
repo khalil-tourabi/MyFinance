@@ -7,6 +7,7 @@ import {
   addTransactionSlice,
   getTransactionsSlice,
 } from "../../state/transactions/transactionsSlice";
+import { Link } from "react-router-dom";
 
 const TransactionPage = () => {
   const { accessToken, currentUser, status } = useSelector(
@@ -130,11 +131,11 @@ const TransactionPage = () => {
                               <time className="block text-xs text-gray-500">
                                 {transaction.dateTransaction}
                               </time>
-                              <a href="#">
+                              <Link to="/categorie" state={{ categoryName: category ? category.nomCategorie : "Unknown Category" }}>
                                 <h3 className="mt-0.5 text-lg font-medium text-gray-900">
                                   {transaction.nomTransaction}
                                 </h3>
-                              </a>
+                              </Link>
                               <div className="mt-4 flex flex-wrap gap-1">
                                 <span className="whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-xs text-purple-600">
                                   {category
@@ -145,10 +146,14 @@ const TransactionPage = () => {
                             </div>
                             <div className="card-rightSide">
                               <div className="card-prix">
-                                <span>Montant: </span>{transaction.montantTransaction}
+                                <span>Montant: </span>
+                                {transaction.montantTransaction}
                               </div>
                               <div className="mt-8">
-                                <span>Budget: </span>{category ? category.budgetCategorie : 'Unknown budget'}
+                                <span>Budget: </span>
+                                {category
+                                  ? category.budgetCategorie
+                                  : "Unknown budget"}
                               </div>
                             </div>
                           </div>
