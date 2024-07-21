@@ -15,18 +15,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../state/users/usersSlice";
 
 const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  // { name: 'Team', href: '#', current: false },
-  // { name: 'Projects', href: '#', current: false },
-  // { name: 'Calendar', href: '#', current: false },
+  { name: "Accueil", href: "/", current: false },
+  { name: "Dashboard", href: "/dashboard", current: true },
 ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function NavbarLogged() {
-  const {accessToken} = useSelector((store) => store.users)
+export default function Navbar() {
+  const { accessToken } = useSelector((store) => store.users);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,14 +32,14 @@ export default function NavbarLogged() {
   const logoutHandle = () => {
     dispatch(logout(accessToken))
       .then(() => {
-        navigate('/')
+        navigate("/");
       })
       .catch((error) => {
-        console.error('failed to logout', error);
-        alert('failed to logout, Please try again!')
-      })
-  }
-  
+        console.error("failed to logout", error);
+        alert("failed to logout, Please try again!");
+      });
+  };
+
   return (
     <Disclosure as="nav" className="bg-gray-100">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -63,24 +61,28 @@ export default function NavbarLogged() {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex flex-shrink-0 items-center">
-              <img alt="Your Company" src={logo} className="h-8 w-auto" />
+              <img
+                alt="Your Company"
+                src={logo}
+                className="h-8 w-auto"
+              />
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
                 {navigation.map((item) => (
-                  <a
+                  <Link
                     key={item.name}
-                    href={item.href}
+                    to={item.href}
                     aria-current={item.current ? "page" : undefined}
                     className={classNames(
                       item.current
-                        ? "bg-blue-600 text-white"
-                        : "text-gray-300 hover:bg-blue-800 hover:text-white",
+                        ? " text-blue-700"
+                        : "text-blue-700",
                       "rounded-md px-3 py-2 text-sm font-medium"
                     )}
                   >
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -96,7 +98,7 @@ export default function NavbarLogged() {
               <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in">
                 <MenuItem>
                   <Link
-                    to={'/transactions'}
+                    to={"/transactions"}
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                   >
                     Transaction
@@ -104,7 +106,7 @@ export default function NavbarLogged() {
                 </MenuItem>
                 <MenuItem>
                   <Link
-                    to={'/dashboard'}
+                    to={"/dashboard"}
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                   >
                     Dashboard
@@ -112,7 +114,7 @@ export default function NavbarLogged() {
                 </MenuItem>
                 <MenuItem>
                   <Link
-                    to={'/profile'}
+                    to={"/profile"}
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                   >
                     Your Profile
@@ -120,7 +122,7 @@ export default function NavbarLogged() {
                 </MenuItem>
                 <MenuItem>
                   <Link
-                    to={'/budget'}
+                    to={"/budget"}
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                   >
                     Budget
